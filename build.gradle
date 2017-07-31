@@ -1,0 +1,27 @@
+group 'com.nastia'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: "groovy"
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    def seleniumVersion = '2.53.0'
+    def gebVersion = '1.1.1'
+
+    compile "org.twitter4j:twitter4j-core:4.0.0"
+
+    testCompile "org.gebish:geb-junit4:$gebVersion"
+    testCompile "junit:junit:4.12"
+
+    testCompile "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
+    testRuntime "org.seleniumhq.selenium:selenium-support:$seleniumVersion"
+    compile 'junit:junit:4.12'
+}
