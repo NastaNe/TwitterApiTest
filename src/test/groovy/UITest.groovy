@@ -1,5 +1,10 @@
 import geb.Browser
 import geb.Page
+import TwitterApi
+import twitter4j.Twitter
+import twitter4j.TwitterFactory
+import twitter4j.User
+import twitter4j.conf.ConfigurationBuilder
 
 /**
  * created by nastane on 7/31/17.
@@ -57,7 +62,19 @@ Browser.drive {
 
     browser.page.find("a[data-element-term=tweet_stats]").firstElement().click()
 
-    assert browser.page.find("div[data-you-follow=true]").firstElement().getAttribute("data-tweet-id").contains("892029027279679490")
+    ConfigurationBuilder cb = new ConfigurationBuilder()
+    cb.setDebugEnabled(true)
+            .setOAuthConsumerKey("2YO9awIYJEFh9vQ372wBoMStu")
+            .setOAuthConsumerSecret("AxKj1OsXjyE1jwmD7CcOy4xiupv2yBNx5RcWljzuFnPo8JRqkz")
+            .setOAuthAccessToken("891384861533011968-dKaMCNXwc6TvppYtZlVWHd1HW7vGqTB")
+            .setOAuthAccessTokenSecret("4xhHGNw22ZQJUCC9xrLJ3TerLomVW1qkbfOGN1E4AbA3b")
+
+    TwitterFactory tf = new TwitterFactory(cb.build())
+    Twitter twitter = tf.getInstance()
+    User user = twitter.verifyCredentials();
+    lastTweet = user.getStatus().getId().toString()
+
+    assert browser.page.find("div[data-you-follow=false]").firstElement().getAttribute("data-tweet-id").contains(lastTweet)
 }
 
 
